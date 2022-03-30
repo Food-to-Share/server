@@ -11,6 +11,6 @@ func Start() {
 	router := gin.Default()
 	router.GET("/organizations", handlers.GetAllOrgs)
 
-	log.Println("API is running! Teste")
+	log.Println("API is running!")
 	router.Run(":4000")
 }
