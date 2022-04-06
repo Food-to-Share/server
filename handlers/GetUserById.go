@@ -1,30 +1,32 @@
 package handlers
 
 import (
+	"strconv"
+
 	"github.com/Food-to-Share/server/database"
 	"github.com/Food-to-Share/server/models"
 	"github.com/gin-gonic/gin"
 )
 
-func AddUser(c *gin.Context) {
+func GetUserById(c *gin.Context) {
+	id := c.Param("id")
 
-	db := database.GetDatabase()
+	newid, err := strconv.Atoi(id)
 
-	var user models.User
-
-	err := c.ShouldBindJSON(&user)
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot bind JSON: " + err.Error(),
+			"error": "ID has to be integer",
 		})
 		return
 	}
 
-	err = db.Create(&user).Error
+	db := database.GetDatabase()
 
+	var user models.User
+	err = db.First(&user, newid).Error
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot create user: " + err.Error(),
+			"error": "Cannot find user: " + err.Error(),
 		})
 		return
 	}
