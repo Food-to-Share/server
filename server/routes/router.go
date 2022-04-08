@@ -9,7 +9,7 @@ import (
 func ConfigRoutes(router *gin.Engine) *gin.Engine {
 	main := router.Group("api/v1")
 	{
-		User := main.Group("users")
+		User := main.Group("users", middlewares.Auth())
 		{
 			User.GET("/:id", handlers.GetUserById)
 			User.GET("/", handlers.GetAllUsers)
@@ -20,6 +20,12 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 			Organization.GET("/:id", handlers.GetOrgById)
 			Organization.GET("/", handlers.GetAllOrgs)
 			Organization.POST("/", handlers.AddOrg)
+		}
+		Admin := main.Group("admins")
+		{
+			Admin.GET("/:id", handlers.GetAdminById)
+			Admin.GET("/", handlers.GetAllAdmins)
+			Admin.POST("/", handlers.AddAdmin)
 		}
 		main.POST("login", handlers.Login)
 	}

@@ -19,23 +19,23 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	var user models.User
-	dbError := db.Where("email = ?", p.Email).First(&user).Error
+	var admin models.Admin
+	dbError := db.Where("email = ?", p.Email).First(&admin).Error
 	if dbError != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot find user",
+			"error": "Cannot find admin",
 		})
 		return
 	}
 
-	if user.Password != services.SHA256ENCODER(p.Password) {
+	if admin.Password != services.SHA256ENCODER(p.Password) {
 		c.JSON(401, gin.H{
 			"error": "invalid credentials",
 		})
 		return
 	}
 
-	token, err := services.NewJWTService().GenerateToken(user.ID)
+	token, err := services.NewJWTService().GenerateToken(admin.ID)
 	if err != nil {
 		c.JSON(500, gin.H{
 			"error": err.Error(),
