@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/Food-to-Share/server/handlers"
+	"github.com/Food-to-Share/server/server/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,6 +15,13 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 			User.GET("/", handlers.GetAllUsers)
 			User.POST("/", handlers.AddUser)
 		}
+		Organization := main.Group("orgs", middlewares.Auth())
+		{
+			Organization.GET("/:id", handlers.GetOrgById)
+			Organization.GET("/", handlers.GetAllOrgs)
+			Organization.POST("/", handlers.AddOrg)
+		}
+		main.POST("login", handlers.Login)
 	}
 	return router
 }

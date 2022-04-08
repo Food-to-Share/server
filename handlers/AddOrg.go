@@ -1,21 +1,34 @@
 package handlers
 
 import (
-	"math/rand"
-
-	"github.com/Food-to-Share/server/mocks"
+	"github.com/Food-to-Share/server/database"
 	"github.com/Food-to-Share/server/models"
 	"github.com/gin-gonic/gin"
 )
 
-func AddOrg(c *gin.Context)  {
-	var newOrg models.Organization
+func AddOrg(c *gin.Context) {
 
-	if err := c.BindJSON(&newOrg); err != nil {
+	db := database.GetDatabase()
+
+	var org models.Organization
+
+	err := c.ShouldBindJSON(&org)
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "Cannot bind JSON: " + err.Error(),
+		})
 		return
 	}
 
-	newOrg.ID = rand.Intn(1000)
-	mocks.Organizations = append(mocks.Organizations, newOrg)
-	
+	err = db.Create(&org).Error
+
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": "Cannot create org: " + err.Error(),
+		})
+		return
+	}
+
+	c.JSON(200, org)
+
 }
