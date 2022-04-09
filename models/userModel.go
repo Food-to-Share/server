@@ -7,5 +7,5 @@ type User struct {
 	Email        string `json:"email"`
 	Contact      int    `json:"contact"`
 	Address      string `json:"adress"`
-	Organization string `json:"organization"`
+	Organization int    `json:"organization"`
 }
