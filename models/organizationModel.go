@@ -1,8 +1,8 @@
 package models
 
 type Organization struct {
-	ID             int    `json:"id"`
-	Name           string `json:"title"`
+	ID             uint   `json:"id" gorm:"primaryKey"`
+	Name           string `json:"name"`
 	Address        string `json:"address"`
-	SocialSecurity string `json:"socialSec"`
+	SocialSecurity string `json:"socialsecurity"`
 }

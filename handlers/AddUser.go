@@ -29,6 +29,6 @@ func AddUser(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, user)
+	c.Status(204)
 
 }
