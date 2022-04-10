@@ -13,18 +13,18 @@ const (
 	host     = "localhost"
 	port     = 5432
 	user     = "postgres"
-	password = "6910"
+	password = "1234"
 	dbname   = "foodToShare"
 )
 
 var db *gorm.DB
 
-func StartDB(){
+func StartDB() {
 	str := fmt.Sprintf("host=%s port=%d user=%s "+"password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
-	database, err := gorm.Open(postgres.Open(str),&gorm.Config{})
+	database, err := gorm.Open(postgres.Open(str), &gorm.Config{})
 	if err != nil {
-		log.Fatal("error: ",err)
+		log.Fatal("error: ", err)
 	}
 
 	db = database
