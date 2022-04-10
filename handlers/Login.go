@@ -8,6 +8,7 @@ import (
 )
 
 func Login(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
 	db := database.GetDatabase()
 
 	var p models.Login
