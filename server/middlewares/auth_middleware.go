@@ -7,12 +7,12 @@ import (
 
 func Auth() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		const bearer_schema = "Bearer "
+		const Bearer_Schema = "Bearer "
 		header := c.GetHeader("Authorization")
 		if header == "" {
 			c.AbortWithStatus(401)
 		}
-		token := header[len(bearer_schema):]
+		token := header[len(Bearer_Schema):]
 
 		if !services.NewJWTService().ValidateToken(token) {
 			c.AbortWithStatus(401)
