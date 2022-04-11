@@ -11,14 +11,13 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 	router.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "OPTIONS"},
-		AllowedHeaders:   []string{"Origin", "Content-Type", "Accept"},
+		AllowedHeaders:   []string{"Origin", "Content-Type", "Accept", "Authorization"},
 		AllowCredentials: true,
-		Debug:            true,
 	}))
 
 	main := router.Group("api/v1")
 	{
-		User := main.Group("users", middlewares.Auth())
+		User := main.Group("users")
 		{
 			User.GET("/:id", handlers.GetUserById)
 			User.GET("/", handlers.GetAllUsers)
