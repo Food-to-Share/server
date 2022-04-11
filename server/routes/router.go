@@ -4,9 +4,18 @@ import (
 	"github.com/Food-to-Share/server/handlers"
 	"github.com/Food-to-Share/server/server/middlewares"
 	"github.com/gin-gonic/gin"
+	cors "github.com/rs/cors/wrapper/gin"
 )
 
 func ConfigRoutes(router *gin.Engine) *gin.Engine {
+	router.Use(cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "OPTIONS"},
+		AllowedHeaders:   []string{"Origin", "Content-Type", "Accept"},
+		AllowCredentials: true,
+		Debug:            true,
+	}))
+
 	main := router.Group("api/v1")
 	{
 		User := main.Group("users", middlewares.Auth())
