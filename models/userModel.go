@@ -6,6 +6,6 @@ type User struct {
 	Name         string `json:"name"`
 	Email        string `json:"email"`
 	Contact      int    `json:"contact"`
-	Address      string `json:"adress"`
-	Organization int    `json:"organization"`
+	Address      string `json:"address"`
+	Organization string `json:"organization"`
 }
