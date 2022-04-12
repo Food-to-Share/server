@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func DelOrg(c *gin.Context) {
+func DelHelp(c *gin.Context) {
 	id := c.Param("id")
 	
 	newid, err := strconv.Atoi(id)
@@ -21,11 +21,11 @@ func DelOrg(c *gin.Context) {
 
 	db := database.GetDatabase()
 
-	err = db.Delete(&models.Organization{}, newid).Error
+	err = db.Delete(&models.Help{}, newid).Error
 
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot delete org: " + err.Error(),
+			"error": "Cannot delete help: " + err.Error(),
 		})
 		return
 	}

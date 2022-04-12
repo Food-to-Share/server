@@ -4,7 +4,10 @@ go 1.17
 
 require gorm.io/driver/postgres v1.3.4
 
-require github.com/gin-contrib/cors v1.3.1 // indirect
+require (
+	github.com/gin-contrib/cors v1.3.1 // indirect
+	github.com/joho/godotenv v1.4.0 // indirect
+)
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
