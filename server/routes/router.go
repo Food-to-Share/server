@@ -22,28 +22,34 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 			User.GET("/:id", handlers.GetUserById)
 			User.GET("/", handlers.GetAllUsers)
 			User.POST("/", handlers.AddUser)
+			User.DELETE("/:id", handlers.DelUser)
+			User.PUT("/", handlers.UpdateUser)
 		}
 		Organization := main.Group("orgs", middlewares.Auth())
 		{
 			Organization.GET("/:id", handlers.GetOrgById)
 			Organization.GET("/", handlers.GetAllOrgs)
 			Organization.POST("/", handlers.AddOrg)
+			Organization.DELETE("/:id", handlers.DelOrg)
+			Organization.PUT("/", handlers.UpdateOrg)
 		}
 		Admin := main.Group("admins")
 		{
 			Admin.GET("/:id", handlers.GetAdminById)
 			Admin.GET("/", handlers.GetAllAdmins)
 			Admin.POST("/", handlers.AddAdmin)
+			Admin.DELETE("/:id", handlers.DelAdmin)
+			Admin.PUT("/", handlers.UpdateAdmin)
+		}
+		Help := main.Group("helps")
+		{
+			Help.GET("/:id", handlers.GetHelpById)
+			Help.GET("/", handlers.GetAllHelps)
+			Help.POST("/", handlers.AddHelp)
+			Help.DELETE("/:id", handlers.DelHelp)
+			Help.PUT("/", handlers.UpdateHelp)
 		}
 		main.POST("login", handlers.Login)
 	}
 	return router
 }
-
-// 	router.GET("/organizations", handlers.GetAllOrgs)
-// 	router.GET("/organizations/:name", handlers.GetOrg)
-// 	router.POST("/organizations", handlers.AddOrg)
-// 	// router.DELETE("/organizations", handlers.DelOrg)
-// 	router.POST("/users", handlers.AddUser)
-// 	router.GET("/users", handlers.GetAllUsers)
-// 	router.GET("/users/:id", handlers.GetUserById)
