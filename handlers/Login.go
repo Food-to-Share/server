@@ -30,7 +30,7 @@ func Login(c *gin.Context) {
 
 	if admin.Password != services.SHA256ENCODER(p.Password) {
 		c.JSON(401, gin.H{
-			"error": "invalid credentials",
+			"error": "Invalid Credentials",
 		})
 		return
 	}
