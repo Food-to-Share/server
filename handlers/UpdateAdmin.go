@@ -6,13 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddOrg(c *gin.Context) {
+func UpdateAdmin(c *gin.Context) {
 
 	db := database.GetDatabase()
 
-	var org models.Organization
+	var admin models.Admin
 
-	err := c.ShouldBindJSON(&org)
+	err := c.ShouldBindJSON(&admin)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": "Cannot bind JSON: " + err.Error(),
@@ -20,15 +20,15 @@ func AddOrg(c *gin.Context) {
 		return
 	}
 
-	err = db.Create(&org).Error
+	err = db.Save(&admin).Error
 
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot create org: " + err.Error(),
+			"error": "Cannot update admin: " + err.Error(),
 		})
 		return
 	}
 
-	c.JSON(200, org)
+	c.JSON(200, admin)
 
 }

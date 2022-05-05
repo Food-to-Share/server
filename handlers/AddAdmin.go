@@ -3,16 +3,17 @@ package handlers
 import (
 	"github.com/Food-to-Share/server/database"
 	"github.com/Food-to-Share/server/models"
+	"github.com/Food-to-Share/server/services"
 	"github.com/gin-gonic/gin"
 )
 
-func AddOrg(c *gin.Context) {
+func AddAdmin(c *gin.Context) {
 
 	db := database.GetDatabase()
 
-	var org models.Organization
+	var admin models.Admin
 
-	err := c.ShouldBindJSON(&org)
+	err := c.ShouldBindJSON(&admin)
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": "Cannot bind JSON: " + err.Error(),
@@ -20,15 +21,17 @@ func AddOrg(c *gin.Context) {
 		return
 	}
 
-	err = db.Create(&org).Error
+	admin.Password = services.SHA256ENCODER(admin.Password)
+
+	err = db.Create(&admin).Error
 
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot create org: " + err.Error(),
+			"error": "Cannot create user: " + err.Error(),
 		})
 		return
 	}
 
-	c.JSON(200, org)
+	c.Status(204)
 
 }

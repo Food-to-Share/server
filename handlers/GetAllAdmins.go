@@ -6,16 +6,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetAllOrgs(c *gin.Context) {
+func GetAllAdmins(c *gin.Context) {
 	db := database.GetDatabase()
 
-	var org []models.Organization
-	err := db.Find(&org).Error
+	var admin []models.Admin
+	err := db.Find(&admin).Error
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot list organization: " + err.Error(),
+			"error": "Cannot list user: " + err.Error(),
 		})
 		return
 	}
-	c.JSON(200, org)
+	c.JSON(200, admin)
 }

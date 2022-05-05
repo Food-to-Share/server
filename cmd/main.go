@@ -1,9 +1,15 @@
 package main
 
 import (
-	"github.com/Food-to-Share/server/servers"
+	"github.com/Food-to-Share/server/database"
+	"github.com/Food-to-Share/server/server"
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	servers.Start()
+	database.StartDB()
+
+	// server := server.NewServer()
+
+	server.Run()
 }

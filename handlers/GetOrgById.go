@@ -6,25 +6,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddOrg(c *gin.Context) {
+func GetOrgById(c *gin.Context) {
+
+	id := c.Param("id")
 
 	db := database.GetDatabase()
 
 	var org models.Organization
-
-	err := c.ShouldBindJSON(&org)
+	err := db.First(&org, "id = ?", id).Error
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot bind JSON: " + err.Error(),
-		})
-		return
-	}
-
-	err = db.Create(&org).Error
-
-	if err != nil {
-		c.JSON(400, gin.H{
-			"error": "Cannot create org: " + err.Error(),
+			"error": "Cannot find organization: " + err.Error(),
 		})
 		return
 	}

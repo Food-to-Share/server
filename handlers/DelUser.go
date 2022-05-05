@@ -6,16 +6,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetAllOrgs(c *gin.Context) {
+func DelUser(c *gin.Context) {
+
+	id := c.Param("id")
+
 	db := database.GetDatabase()
 
-	var org []models.Organization
-	err := db.Find(&org).Error
+	err := db.Delete(&models.User{}, "id = ?", id).Error
+
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot list organization: " + err.Error(),
+			"error": "Cannot delete user: " + err.Error(),
 		})
 		return
 	}
-	c.JSON(200, org)
+	c.Status(204)
 }

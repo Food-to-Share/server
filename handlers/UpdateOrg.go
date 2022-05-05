@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func AddOrg(c *gin.Context) {
+func UpdateOrg(c *gin.Context) {
 
 	db := database.GetDatabase()
 
@@ -20,11 +20,11 @@ func AddOrg(c *gin.Context) {
 		return
 	}
 
-	err = db.Create(&org).Error
+	err = db.Save(&org).Error
 
 	if err != nil {
 		c.JSON(400, gin.H{
-			"error": "Cannot create org: " + err.Error(),
+			"error": "Cannot update org: " + err.Error(),
 		})
 		return
 	}
