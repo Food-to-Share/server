@@ -11,32 +11,65 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type NissReq struct {
+	Niss string `json:"niss"`
+}
+
+type LookupResp struct {
+	Medium  string `json:"medium"`
+	Address string `json:"address"`
+	MXID    string `json:"mxid"`
+}
+
 func VerifyUserNiss(c *gin.Context) {
 
 	var user models.User
 
 	var BridgeServerURL = "http://localhost:29318"
 
-	data, err := json.Marshal(&user)
+	err := c.ShouldBindJSON(&user)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	httpposturl := BridgeServerURL
-	reader := bytes.NewBuffer(data)
+	httpposturl := BridgeServerURL + "/_matrix/provision/v1/lookup"
 
-	response, errorPost := http.Post(httpposturl, "application/json", reader)
+	nissreq := NissReq{
+		Niss: user.Ssn,
+	}
+
+	data, err := json.Marshal(nissreq)
+	if err != nil {
+		log.Fatal(err)
+	}
+	reader := bytes.NewReader(data)
+
+	request, errorPost := http.NewRequest("POST", httpposturl, reader)
 	if errorPost != nil {
 		panic(errorPost)
 	}
+	client := &http.Client{}
 
-	defer response.Body.Close()
+	response, error := client.Do(request)
+	if error != nil {
+		c.JSON(400, gin.H{
+			"error": "Cannot do request: " + error.Error(),
+		})
+		return
+	}
 
 	if response.StatusCode == http.StatusOK {
 		respbody, err := ioutil.ReadAll(response.Body)
+
 		if err != nil {
 			panic(err)
 		}
-		c.JSON(200, respbody)
+
+		var lr LookupResp
+
+		err = json.Unmarshal(respbody, &lr)
+		c.JSON(response.StatusCode, lr)
 	}
+	// defer response.Body.Close()
+
 }
