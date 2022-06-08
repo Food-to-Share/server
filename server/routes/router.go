@@ -24,6 +24,7 @@ func ConfigRoutes(router *gin.Engine) *gin.Engine {
 			User.POST("/", handlers.AddUser)
 			User.DELETE("/:id", handlers.DelUser)
 			User.PUT("/", handlers.UpdateUser)
+			User.POST("/verifyUserNiss", handlers.VerifyUserNiss)
 		}
 		Organization := main.Group("orgs", middlewares.Auth())
 		{
