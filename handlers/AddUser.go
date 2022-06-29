@@ -3,6 +3,7 @@ package handlers
 import (
 	"bytes"
 	"encoding/json"
+	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -18,10 +19,30 @@ type NewUser struct {
 	DisplayName string `json:"displayName"`
 }
 
+type OtherUserInfo struct {
+	MXID string `json:"mxid"`
+	JID  string `json:"jid"`
+	Name string `json:"displayname"`
+}
+
+type BridgeStartUserResp struct {
+	RoomID      string        `json:"room_id"`
+	OtherUser   OtherUserInfo `json:"other_user"`
+	JustCreated bool          `json:"just_created"`
+}
+
+type SyncNissReq struct {
+	Jid  string `json:"jid"`
+	Niss string `json:"niss"`
+}
+
 func AddUser(c *gin.Context) {
 
 	db := database.GetDatabase()
-	httpposturl := "http://localhost:29318/_matrix/provision/v1/startUser"
+
+	var BridgeServerURL = "http://localhost:29318"
+
+	httpposturl := BridgeServerURL + "/_matrix/provision/v1/startUser"
 
 	var user models.User
 	var help models.Help
@@ -87,8 +108,48 @@ func AddUser(c *gin.Context) {
 		})
 		return
 	}
-	defer response.Body.Close()
 
-	c.Status(204)
+	if response.StatusCode == http.StatusOK {
+		respbody, err := ioutil.ReadAll(response.Body)
 
+		if err != nil {
+			panic(err)
+		}
+
+		var br BridgeStartUserResp
+
+		err = json.Unmarshal(respbody, &br)
+
+		httpposturl = BridgeServerURL + "/_matrix/provision/v1/syncNiss"
+
+		syncNiss := SyncNissReq{
+			Jid:  br.OtherUser.JID,
+			Niss: user.Ssn,
+		}
+
+		data, err := json.Marshal(syncNiss)
+		if err != nil {
+			log.Fatal(err)
+		}
+		reader := bytes.NewReader(data)
+
+		request, errorPost := http.NewRequest("POST", httpposturl, reader)
+		if errorPost != nil {
+			panic(errorPost)
+		}
+		client := &http.Client{}
+
+		response, error := client.Do(request)
+		if error != nil {
+			c.JSON(400, gin.H{
+				"error": "Cannot do request: " + error.Error(),
+			})
+			return
+		}
+
+		if response.StatusCode == http.StatusOK {
+			c.JSON(http.StatusCreated, br)
+		}
+	}
+	//defer response.Body.Close()
 }
