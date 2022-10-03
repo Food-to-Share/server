@@ -178,6 +178,8 @@ github.com/rs/cors/wrapper/gin v0.0.0-20220223021805-a4a5ce87d5a2 h1:1aAml1kdZoF
 github.com/rs/cors/wrapper/gin v0.0.0-20220223021805-a4a5ce87d5a2/go.mod h1:IqFyM9uAsle0Bd4h2u+28E+Ma2884FPhOsrREy4dj80=
 github.com/rs/cors/wrapper/gin v0.0.0-20220619195839-da52b0701de5 h1:VWeyH4rGz0n3FgzONXYbmwUeb9MLPGFDF/h0nf5bcjM=
 github.com/rs/cors/wrapper/gin v0.0.0-20220619195839-da52b0701de5/go.mod h1:IqFyM9uAsle0Bd4h2u+28E+Ma2884FPhOsrREy4dj80=
+github.com/rs/cors/wrapper/gin v0.0.0-20221003140808-fcebdb403f4d h1:xKonGHdG2Wh3vUkHP0dQC6ZruT9epZCyKrXTxo+xWpk=
+github.com/rs/cors/wrapper/gin v0.0.0-20221003140808-fcebdb403f4d/go.mod h1:IqFyM9uAsle0Bd4h2u+28E+Ma2884FPhOsrREy4dj80=
 github.com/rs/xid v1.2.1/go.mod h1:+uKXf+4Djp6Md1KODXJxgGQPKngRmWyn10oCKFzNHOQ=
 github.com/rs/zerolog v1.13.0/go.mod h1:YbFCdg8HfsridGWAh22vktObvhZbQsZXe4/zB0OKkWU=
 github.com/rs/zerolog v1.15.0/go.mod h1:xYTKnLHcpfU2225ny5qZjxnj9NvkumZYjJHlAThCjNc=
