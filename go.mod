@@ -3,7 +3,7 @@ module github.com/Food-to-Share/server
 go 1.19
 
 require (
-	github.com/google/uuid v1.4.0
+	github.com/google/uuid v1.6.0
 	github.com/joho/godotenv v1.5.1
 	gorm.io/driver/postgres v1.4.5
 )
