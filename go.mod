@@ -33,7 +33,7 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/rs/cors v1.8.2 // indirect
-	github.com/rs/cors/wrapper/gin v0.0.0-20221003140808-fcebdb403f4d
+	github.com/rs/cors/wrapper/gin v1.10.1
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa // indirect
 	golang.org/x/sys v0.0.0-20220330033206-e17cdc41300f // indirect
