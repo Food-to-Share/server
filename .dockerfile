@@ -1,3 +1,3 @@
-FROM postgres:13.15
+FROM postgres:13.16
 
 EXPOSE 5432
